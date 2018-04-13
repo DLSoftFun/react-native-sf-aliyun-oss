@@ -5,7 +5,7 @@
 
 
 # 安装
-* npm install react-native-sf-image-zoom-viewer
+* npm install react-native-sf-aliyun-oss
 * npm install react-native-aliyun-oss-cp
 * react-native link react-native-aliyun-oss-cp
 
