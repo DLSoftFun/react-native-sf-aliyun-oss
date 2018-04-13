@@ -1,22 +1,24 @@
 {
-  "name": "SFAliyunOss",
-  "version": "0.0.1",
-  "private": true,
+  "name": "react-native-sf-aliyun-oss",
+  "version": "1.0.0",
+  "description": "阿里云oss上传",
+  "main": "index.js",
   "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "dependencies": {
-    "react": "16.3.1",
-    "react-native": "0.55.2"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DLSoftFun/react-native-sf-aliyun-oss.git"
   },
-  "devDependencies": {
-    "babel-jest": "22.4.3",
-    "babel-preset-react-native": "4.0.0",
-    "jest": "22.4.3",
-    "react-test-renderer": "16.3.1"
+  "keywords": [
+    "aliyun",
+    "oss",
+    "upload"
+  ],
+  "author": "suifeng586",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DLSoftFun/react-native-sf-aliyun-oss.git/issues"
   },
-  "jest": {
-    "preset": "react-native"
-  }
+  "homepage": "https://github.com/DLSoftFun/react-native-sf-aliyun-oss#readme"
 }
