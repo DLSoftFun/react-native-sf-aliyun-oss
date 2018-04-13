@@ -8,13 +8,14 @@ import AliyunOSS from 'react-native-aliyun-oss-cp';
 export default class SFAliyunOss extends Component{
 
     static info = null
+    static multiKeys = []
 
     /***
      * oss配置 只需配置一次
      * @param config
      */
     static config(config){
-        this.info = config
+        SFAliyunOss.info = config
         var data = {
             AccessKey: config.AccessKey,
             SecretKey: config.SecretKey,
@@ -40,7 +41,7 @@ export default class SFAliyunOss extends Component{
 
         // upload config
         const uploadConfig = {
-            bucketName: this.info.bucketName,  //your bucketName
+            bucketName: SFAliyunOss.info.bucketName,  //your bucketName
             sourceFile: filePath, // local file path
             ossFile: folder + '/' + fileName // the file path uploaded to oss
         }
@@ -62,6 +63,41 @@ export default class SFAliyunOss extends Component{
         })
 
     }
+
+    /***
+     * 多个文件上传
+     * @param folder
+     * @param filePaths [{filePath:'',ext:'png'},{filePath:'',ext:'png'}]
+     * @param progress
+     * @param suc
+     * @param fail
+     */
+    static uploadMulti(folder,filePaths,progress,suc,fail){
+        const count = filePaths.length;
+        this.uploadSingle(0,count,folder,filePaths,progress,suc,fail);
+    }
+    static uploadSingle(index,count,folder,filePaths,progress,suc,fail) {
+        if (index >= count){
+            if (suc){
+                suc(SFAliyunOss.multiKeys)
+            }
+            return;
+        }
+        var data = filePaths[index];
+        var p_start = index/count;
+        this.upload(folder, data.filePath, data.ext, (value)=>{
+            if (progress){
+                progress(p_start+value/count)
+            }
+        }, (key)=>{
+            SFAliyunOss.multiKeys.push(key);
+            this.uploadSingle(index+1,count,filePaths[index+1],progress,suc,fail)
+        }, (err)=>{
+            if (fail){
+                fail(err)
+            }
+        })
+    }
     /***
      * 文件下载
      * @param filePath 文件在oss上的路径
@@ -71,7 +107,7 @@ export default class SFAliyunOss extends Component{
      */
     static downLoad(filePath,progress, suc, fail) {
         const downloadConfig = {
-            bucketName: this.info.bucketName,
+            bucketName: SFAliyunOss.info.bucketName,
             ossFile: filePath // the file path on the oss
         };
         const downloadProgress = p => progress(p.currentSize / p.totalSize);
